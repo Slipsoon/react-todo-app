@@ -7,6 +7,10 @@ export default function SideMenu({ onNewProjectClick }) {
       <div className="py-14">
         <Button onClick={onNewProjectClick} name="+ Add Project" />
       </div>
+      <ul className="text-white font-medium text-2xl">
+        <li className="bg-stone-800 p-2 mb-4 hover:cursor-pointer">Test 1</li>
+        <li className="bg-stone-800 p-2 mb-4 hover:cursor-pointer">Test 2</li>
+      </ul>
     </div>
   );
 }

@@ -1,6 +1,15 @@
-export default function NewProjectForm({ onFormSave, onFormCancel }) {
+import { forwardRef } from "react";
+
+const NewProjectForm = forwardRef(function NewProjectForm(
+  { onFormSave, onFormCancel },
+  ref
+) {
   return (
-    <div className="flex flex-col gap-8 w-3/5 mx-12 my-40">
+    <form
+      method="post"
+      ref={ref}
+      className="flex flex-col gap-8 w-3/5 mx-12 my-40"
+    >
       <div className="flex justify-end items-center">
         <button className="text-xl m-4 font-medium" onClick={onFormCancel}>
           Cancel
@@ -40,6 +49,8 @@ export default function NewProjectForm({ onFormSave, onFormCancel }) {
           type="date"
         />
       </div>
-    </div>
+    </form>
   );
-}
+});
+
+export default NewProjectForm;

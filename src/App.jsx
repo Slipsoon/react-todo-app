@@ -1,9 +1,10 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import Projects from "./components/Projects";
 import SideMenu from "./components/SideMenu";
 import NewProjectForm from "./components/NewProjectForm";
 
 function App() {
+  const newProjectTitle = useRef();
   const [displayNewProjectForm, setDisplayNewProjectForm] = useState(false);
 
   function handleDisplayNewProjectForm(displayForm) {
@@ -11,6 +12,7 @@ function App() {
   }
 
   function handleFormSave() {
+    console.log(newProjectTitle.current.value);
     handleDisplayNewProjectForm(false);
   }
 
@@ -19,6 +21,7 @@ function App() {
       <SideMenu onNewProjectClick={() => handleDisplayNewProjectForm(true)} />
       {displayNewProjectForm ? (
         <NewProjectForm
+          ref={newProjectTitle}
           onFormSave={handleFormSave}
           onFormCancel={() => handleDisplayNewProjectForm(false)}
         />
