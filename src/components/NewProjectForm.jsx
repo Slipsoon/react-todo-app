@@ -1,22 +1,29 @@
-import { forwardRef } from "react";
+import { useRef } from "react";
 
-const NewProjectForm = forwardRef(function NewProjectForm(
-  { onFormSave, onFormCancel },
-  ref
-) {
+export default function NewProjectForm({ onFormSave, onFormCancel }) {
+  const titleInput = useRef();
+  const descriptionInput = useRef();
+  const dateInput = useRef();
+
+  function handleFormSave() {
+    const formData = {
+      projectTitle: titleInput.current.value,
+      projectDescription: descriptionInput.current.value,
+      projectDate: dateInput.current.value,
+    };
+
+    onFormSave(formData);
+  }
+
   return (
-    <form
-      method="post"
-      ref={ref}
-      className="flex flex-col gap-8 w-3/5 mx-12 my-40"
-    >
+    <div className="flex flex-col gap-8 w-3/5 mx-12 my-40">
       <div className="flex justify-end items-center">
         <button className="text-xl m-4 font-medium" onClick={onFormCancel}>
           Cancel
         </button>
         <button
+          onClick={handleFormSave}
           className="bg-black text-white text-xl px-8 rounded-lg h-14"
-          onClick={onFormSave}
         >
           Save
         </button>
@@ -26,6 +33,7 @@ const NewProjectForm = forwardRef(function NewProjectForm(
           Title
         </span>
         <input
+          ref={titleInput}
           type="text"
           className="h-12 bg-stone-300 border-b-2 border-stone-400 rounded p-2 font-medium text-2xl text-neutral-600"
         ></input>
@@ -35,6 +43,7 @@ const NewProjectForm = forwardRef(function NewProjectForm(
           Description
         </span>
         <textarea
+          ref={descriptionInput}
           className="h-24 bg-stone-300 border-b-2 border-stone-400 rounded p-2 font-medium text-2xl text-neutral-600"
           rows={4}
           cols={40}
@@ -45,12 +54,11 @@ const NewProjectForm = forwardRef(function NewProjectForm(
           Due Date
         </span>
         <input
+          ref={dateInput}
           className="h-12 bg-stone-300 border-b-2 border-stone-400 rounded p-2 font-medium text-2xl text-neutral-600"
           type="date"
         />
       </div>
-    </form>
+    </div>
   );
-});
-
-export default NewProjectForm;
+}

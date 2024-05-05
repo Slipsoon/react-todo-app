@@ -1,27 +1,38 @@
-import { useRef, useState } from "react";
+import { useState } from "react";
 import Projects from "./components/Projects";
 import SideMenu from "./components/SideMenu";
 import NewProjectForm from "./components/NewProjectForm";
 
 function App() {
-  const newProjectTitle = useRef();
   const [displayNewProjectForm, setDisplayNewProjectForm] = useState(false);
+  const [projects, setProjects] = useState([]);
 
   function handleDisplayNewProjectForm(displayForm) {
     setDisplayNewProjectForm(displayForm);
   }
 
-  function handleFormSave() {
-    console.log(newProjectTitle.current.value);
+  function handleFormSave(newProject) {
+    setProjects([
+      ...projects,
+      {
+        projectTitle: newProject.projectTitle,
+        projectDescription: newProject.projectDescription,
+        projectDate: newProject.projectDate,
+        projectTasks: [],
+      },
+    ]);
+
     handleDisplayNewProjectForm(false);
   }
 
   return (
     <div className="flex">
-      <SideMenu onNewProjectClick={() => handleDisplayNewProjectForm(true)} />
+      <SideMenu
+        onNewProjectClick={() => handleDisplayNewProjectForm(true)}
+        projects={projects}
+      />
       {displayNewProjectForm ? (
         <NewProjectForm
-          ref={newProjectTitle}
           onFormSave={handleFormSave}
           onFormCancel={() => handleDisplayNewProjectForm(false)}
         />
