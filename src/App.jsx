@@ -19,12 +19,10 @@ function App() {
 
   function handleProjectDelete(project) {
     setProjects((projects) => {
-      let newProjectsState = [...projects];
-      const projectIndexToDelete = newProjectsState.indexOf(project);
-      newProjectsState.splice(projectIndexToDelete, 1);
-
-      return newProjectsState;
+      const newExistingProjects = projects.filter((p) => p !== project);
+      return getProjectsDeepClone(newExistingProjects);
     });
+
     setDisplayProjectDetailsForm(undefined);
   }
 
@@ -35,17 +33,28 @@ function App() {
   }
 
   function handleFormSave(newProject) {
-    setProjects([
-      ...projects,
-      {
+    setProjects((currentProjectsState) => {
+      let newProjectsState = getProjectsDeepClone(currentProjectsState);
+      newProjectsState.push({
         projectTitle: newProject.projectTitle,
         projectDescription: newProject.projectDescription,
         projectDate: newProject.projectDate,
         projectTasks: [],
-      },
-    ]);
+      });
+
+      return newProjectsState;
+    });
 
     handleDisplayNewProjectForm(false);
+  }
+
+  function getProjectsDeepClone(projects) {
+    return [
+      ...projects.map((p) => ({
+        ...p,
+        projectTasks: [...p.projectTasks],
+      })),
+    ];
   }
 
   return (
@@ -67,7 +76,9 @@ function App() {
           onProjectDetailsTaskAdd={handleProjectDetailsAddTask}
         />
       ) : (
-        <Projects />
+        <Projects
+          onCreateNewProject={() => handleDisplayNewProjectForm(true)}
+        />
       )}
     </div>
   );

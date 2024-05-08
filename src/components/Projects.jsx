@@ -1,6 +1,6 @@
 import Button from "./Button";
 
-export default function Projects({ ...props }) {
+export default function Projects({ onCreateNewProject }) {
   return (
     <div className="flex flex-1 flex-col justify-center items-center gap-10">
       <img className="w-24" src="logo.png" />
@@ -8,7 +8,7 @@ export default function Projects({ ...props }) {
       <span className="text-2xl text-stone-400 font-medium">
         Select a project or get started with a new one
       </span>
-      <Button name="Create new project" />
+      <Button onClick={onCreateNewProject} name="Create new project" />
     </div>
   );
 }
